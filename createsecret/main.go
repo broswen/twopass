@@ -59,8 +59,6 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 		return Response{StatusCode: 500}, err
 	}
 
-	log.Println(string(passOneHash), string(passTwoHash), input.Secret)
-
 	putItemInput := &dynamodb.PutItemInput{
 		TableName: aws.String(os.Getenv("SECRETSTABLE")),
 		Item: map[string]types.AttributeValue{

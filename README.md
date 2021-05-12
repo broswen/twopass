@@ -55,3 +55,5 @@ TwoPass stores secrets that can only be access if both passwords are presented. 
     "passTwo": "second password"
 }
 ```
+
+![diagram](./images/diagram.png)
