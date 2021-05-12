@@ -57,3 +57,10 @@ TwoPass stores secrets that can only be access if both passwords are presented. 
 ```
 
 ![diagram](./images/diagram.png)
+
+
+### TODO
+- [ ] Refactor request/response types into single package
+- [ ] Refactor creation of DynamoDBClient
+- [ ] Handle HTTP errors better
+- [ ] Encrypt secret using access passwords
