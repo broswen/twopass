@@ -1,0 +1,70 @@
+service: twopass
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: go1.x
+  memorySize: 128
+  timeout: 5
+  lambdaHashingVersion: 20201221
+
+  stage: dev
+  region: us-east-1
+
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+        - dynamodb:UpdateItem
+      Resource: !GetAtt SecretsTable.Arn
+
+  environment:
+    SECRETSTABLE: !Ref SecretsTable
+
+package:
+  patterns:
+    - '!./**'
+    - ./bin/**
+
+functions:
+  createsecret:
+    handler: bin/createsecret
+    events:
+      - httpApi:
+          path: /createsecret
+          method: post
+  getsecret:
+    handler: bin/getsecret
+    events:
+      - httpApi:
+          path: /getsecret
+          method: post
+  updatesecret:
+    handler: bin/updatesecret
+    events:
+      - httpApi:
+          path: /updatesecret
+          method: put
+  deletesecret:
+    handler: bin/deletesecret
+    events:
+      - httpApi:
+          path: /deletesecret
+          method: post
+
+resources:
+  Resources:
+    SecretsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-secretstable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
