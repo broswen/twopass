@@ -70,7 +70,10 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 	if err = bcrypt.CompareHashAndPassword([]byte(getResponse.Item["passTwo"].(*types.AttributeValueMemberS).Value), []byte(input.PassTwo)); err != nil {
 		return Response{StatusCode: 401}, nil
 	}
-	//decrypt secret
+
+	//TODO create AES key with PBKDF2
+	//decrypt secret using generated key
+
 	secret := getResponse.Item["secret"].(*types.AttributeValueMemberS).Value
 
 	response := &GetSecretResponse{input.Id, secret}

@@ -59,6 +59,9 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 		return Response{StatusCode: 500}, err
 	}
 
+	//TODO create AES key with PBKDF2
+	//encrypt secret using generated key
+
 	putItemInput := &dynamodb.PutItemInput{
 		TableName: aws.String(os.Getenv("SECRETSTABLE")),
 		Item: map[string]types.AttributeValue{

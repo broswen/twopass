@@ -71,6 +71,9 @@ func Handler(ctx context.Context, request Request) (Response, error) {
 		return Response{StatusCode: 401}, nil
 	}
 
+	//TODO create AES key with PBKDF2
+	//encrypt secret using generated key
+
 	updateItemInput := &dynamodb.UpdateItemInput{
 		TableName: aws.String(os.Getenv("SECRETSTABLE")),
 		Key: map[string]types.AttributeValue{
