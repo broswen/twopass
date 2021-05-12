@@ -4,6 +4,10 @@ TwoPass is a secret access manager API created with AWS API Gateway, DynamoDB, a
 
 TwoPass stores secrets that can only be access if both passwords are presented. This allows two parties to share a single secret and prevent the other from accessing it without both parties present.
 
+* Access passwords are hashed with bcrypt
+* Secret is encrypted using both access passwords (TODO)
+* API is secured with API keys and throttling
+
 1. Create a secret
 ```json
 {

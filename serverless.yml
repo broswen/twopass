@@ -11,6 +11,13 @@ provider:
   stage: dev
   region: us-east-1
 
+  apiGateway:
+    apiKeys:
+      - twopassTestKey
+    usagePlan:
+      throttle:
+        burstLimit: 5
+        rateLimit: 3
 
   iamRoleStatements:
     - Effect: Allow
@@ -33,27 +40,31 @@ functions:
   createsecret:
     handler: bin/createsecret
     events:
-      - httpApi:
+      - http:
           path: /createsecret
           method: post
+          private: true
   getsecret:
     handler: bin/getsecret
     events:
-      - httpApi:
+      - http:
           path: /getsecret
           method: post
+          private: true
   updatesecret:
     handler: bin/updatesecret
     events:
-      - httpApi:
+      - http:
           path: /updatesecret
           method: put
+          private: true
   deletesecret:
     handler: bin/deletesecret
     events:
-      - httpApi:
+      - http:
           path: /deletesecret
           method: post
+          private: true
 
 resources:
   Resources:
